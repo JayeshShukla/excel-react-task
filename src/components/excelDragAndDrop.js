@@ -1,8 +1,37 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import * as XLSX from "xlsx";
+import { getDictList, getColumnList } from "../utils/index";
 
 const ExcelDragAndDrop = () => {
-  const [fileData, setFileData] = useState();
+  const [columnList, setColumnList] = useState([]);
+  const [dictList, setDictList] = useState({});
+  const dragItem = useRef();
+
+  const dragStart = (e, position) => {
+    console.log(e);
+    dragItem.current = position;
+    console.log(e.target.innerHTML);
+  };
+
+  const displayColumnName =
+    columnList &&
+    columnList.map((itm, index) => (
+      <button
+        type="button"
+        key={index}
+        className="btn btn-info"
+        onDragStart={(e) => dragStart(e, index)}
+        draggable
+        style={{
+          minWidth: "14vw",
+          display: "block",
+          marginTop: "20px",
+          color: "black",
+        }}
+      >
+        {itm}
+      </button>
+    ));
 
   const readUploadFile = (e) => {
     e.preventDefault();
@@ -14,7 +43,8 @@ const ExcelDragAndDrop = () => {
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
         const json = XLSX.utils.sheet_to_json(worksheet);
-        console.log(json);
+        setDictList(getDictList(json));
+        setColumnList(getColumnList(json));
       };
       reader.readAsArrayBuffer(e.target.files[0]);
     }
@@ -37,11 +67,7 @@ const ExcelDragAndDrop = () => {
               scrollbarWidth: "thin",
             }}
           >
-            {/* {a.map((itm, i) => (
-              <li style={{ color: "yellow" }} draggable>
-                {itm}
-              </li>
-            ))} */}
+            {displayColumnName}
           </div>
           <div
             className="col-sm"
