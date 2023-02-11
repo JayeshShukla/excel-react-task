@@ -1,10 +1,10 @@
 import "./App.css";
-import ExcelDragAndDrop from "./components";
+import Home from "./components/Home";
 
 function App() {
   return (
     <div className="App">
-      <ExcelDragAndDrop />
+      <Home />
     </div>
   );
 }

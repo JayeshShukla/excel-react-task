@@ -1,0 +1,38 @@
+.platformDiv {
+  margin-top: 10px;
+  padding: 15px;
+}
+
+.columnPlatform {
+  min-height: 53rem;
+  height: fit-content;
+  max-height: 53rem;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  margin-right: 20px;
+  background: #769fcd;
+  overflow-y: scroll;
+}
+
+.columnPlatform::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.tabularPlatform {
+  background: #b9d7ea;
+  min-height: 53rem;
+  height: fit-content;
+  max-height: 53rem;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+.tabularPlatform::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
