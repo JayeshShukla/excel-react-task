@@ -1,16 +1,43 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import * as XLSX from "xlsx";
 import { getDictList, getColumnList } from "../utils/index";
 
 const ExcelDragAndDrop = () => {
   const [columnList, setColumnList] = useState([]);
   const [dictList, setDictList] = useState({});
-  const dragItem = useRef();
+  const [displayDroppedColumn, setDisplayDroppedColumn] = useState([]);
 
-  const dragStart = (e, position) => {
-    console.log(e);
-    dragItem.current = position;
-    console.log(e.target.innerHTML);
+  const drop = (e, index) => {
+    let tmp = (
+      <div key={index} style={{ margin: "10px" }}>
+        <h6
+          style={{
+            color: "yellow",
+            background: "black",
+            padding: "10px",
+            borderRadius: "20px",
+            display: "inline-block",
+          }}
+        >
+          {columnList[index]}
+        </h6>
+        {dictList[columnList[index]].map((itm, i) => (
+          <div
+            key={i}
+            style={{
+              background: "black",
+              padding: "10px",
+              borderRadius: "5px",
+              marginBottom: "5px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {itm}
+          </div>
+        ))}
+      </div>
+    );
+    setDisplayDroppedColumn((previous) => [...previous, tmp]);
   };
 
   const displayColumnName =
@@ -20,7 +47,7 @@ const ExcelDragAndDrop = () => {
         type="button"
         key={index}
         className="btn btn-info"
-        onDragStart={(e) => dragStart(e, index)}
+        onDragEnd={(e) => drop(e, index)}
         draggable
         style={{
           minWidth: "14vw",
@@ -53,20 +80,25 @@ const ExcelDragAndDrop = () => {
   return (
     <>
       <div className="container-fluid">
-        <div className="row" style={{ height: "100vh", background: "#8262a8" }}>
+        <div
+          className="row"
+          style={{ minHeight: "100vh", width: "100%", background: "#8262a8" }}
+        >
           <div
             className="col-sm-2"
             style={{
               background: "#20262E",
               borderRadius: "10px",
               margin: "10px",
+              minHeight: "100%",
               width: "100%",
-              height: "100%",
               overflowY: "scroll",
               scrollbarColor: "rebeccapurple green",
               scrollbarWidth: "thin",
             }}
           >
+            {displayColumnName}
+            {displayColumnName}
             {displayColumnName}
           </div>
           <div
@@ -76,15 +108,35 @@ const ExcelDragAndDrop = () => {
               borderRadius: "10px",
               margin: "10px",
               marginLeft: "5px",
+              position: "relative",
+              minHeight: "100%",
+              maxHeight: "100%",
+              overflowY: "scroll",
+              scrollbarColor: "rebeccapurple green",
+              scrollbarWidth: "thin",
             }}
           >
             <input
               type="file"
               name="upload"
               id="upload"
-              style={{ color: "yellow", marginTop: "20px" }}
+              style={{
+                color: "yellow",
+                marginTop: "20px",
+                position: "fixed",
+              }}
               onChange={(e) => readUploadFile(e)}
             />
+            <div
+              style={{
+                marginTop: "20px",
+                color: "white",
+                display: "flex",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {displayDroppedColumn}
+            </div>
           </div>
         </div>
       </div>
