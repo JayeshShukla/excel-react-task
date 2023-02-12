@@ -20,7 +20,7 @@ const Home = () => {
       {isExcel ? (
         <Excel columnList={columnList} dictList={dictList} />
       ) : (
-        <PieChart />
+        <PieChart dictList={dictList} />
       )}
     </div>
   );
